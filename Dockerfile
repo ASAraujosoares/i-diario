@@ -1,30 +1,28 @@
-ARG RUBY_VERSION=2
+ARG RUBY_VERSION=3.2.3
 
-FROM ruby:${RUBY_VERSION}-slim-buster
+FROM ruby:${RUBY_VERSION}-slim-bookworm
 
-ARG GEM_VERSION=3
-ARG BUNDLER_VERSION=2
+ARG GEM_VERSION=3.5.5
+ARG BUNDLER_VERSION=2.5.5
 
 ENV APP_PATH /app
 ENV BUNDLE_PATH /box
 
-# Fix Debian Buster repositories (moved to archive after EOL)
-RUN sed -i 's/deb.debian.org/archive.debian.org/g' /etc/apt/sources.list && \
-    sed -i 's/security.debian.org/archive.debian.org/g' /etc/apt/sources.list && \
-    sed -i '/stretch-updates/d' /etc/apt/sources.list
-
-RUN apt-get update -qq
-RUN apt-get install -y \
+RUN apt-get update -qq && \
+    apt-get install -y --no-install-recommends \
     build-essential \
     git \
     libpq-dev \
     nodejs \
     npm \
-    shared-mime-info
+    shared-mime-info \
+    pkg-config \
+    libssl-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get clean
 RUN npm i -g yarn
-RUN gem update --system 3.3.22
+RUN gem update --system ${GEM_VERSION}
 RUN gem install bundler -v ${BUNDLER_VERSION}
 
 RUN mkdir $APP_PATH
