@@ -7,6 +7,32 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+# Patch ActiveRecord::Type delegation for Ruby 3 compatibility
+require 'active_record/type'
+module ActiveRecord
+  module Type
+    class << self
+      def add_modifier(*args, **kwargs)
+        registry.add_modifier(*args, **kwargs)
+      end
+    end
+  end
+end
+
+# Patch YAML to allow aliases (Psych 4 compatibility)
+require 'yaml'
+module YAML
+  class << self
+    def load(yaml, *args, **kwargs)
+      if respond_to?(:unsafe_load)
+        unsafe_load(yaml, *args, **kwargs)
+      else
+        super
+      end
+    end
+  end
+end
+
 module Educacao
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
@@ -40,9 +66,6 @@ module Educacao
         origins '*'
         resource '*', :headers => :any, :methods => [:get, :post, :put, :delete, :options]
       end
-    end
-    config.to_prepare do
-      DeviseController.respond_to :html, :json
     end
   end
 end
