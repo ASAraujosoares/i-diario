@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '3.2.10'
+ruby '~> 3.2.3'
 
 gem 'active_model_serializers', '0.9.12'
 gem 'activerecord-connections', git: 'https://github.com/portabilis/activerecord-connections.git'
@@ -79,7 +79,7 @@ group :development do
   gem 'letter_opener_web', '~> 1.3.4'
   gem 'listen', '~> 3.0.5'
   gem 'meta_request', '0.7.4'
-  gem 'pry-byebug', '3.4.2'
+  gem 'pry-byebug'
   gem 'rack-mini-profiler', '~> 2.3.4'
   gem 'rubocop', '1.10', require: false
   gem 'rubocop-rails'
@@ -100,7 +100,7 @@ group :test do
   gem 'net-http', '0.4.1'
   gem 'nokogiri', '~> 1.16'
   gem 'pdf-inspector', '1.2.1', require: 'pdf/inspector'
-  gem 'pry', '0.10.3'
+  gem 'pry'
   gem 'rails-controller-testing', '~> 1.0.5'
   gem 'rspec-rails', '3.5.2'
   gem 'rspec-retry', '0.6.2 '
