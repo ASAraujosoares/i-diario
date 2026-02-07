@@ -6,7 +6,7 @@ namespace :db do
     paths = Educacao::Application.config.paths['db/migrate'].expanded
 
     ActiveRecord::Migration.verbose = ENV["VERBOSE"] ? ENV["VERBOSE"] == "true" : true
-    context = ActiveRecord::MigrationContext.new(paths, ActiveRecord::SchemaMigration)
+    context = ActiveRecord::MigrationContext.new(paths)
     context.migrate(ENV["VERSION"] ? ENV["VERSION"].to_i : nil) do |migration|
       ENV["SCOPE"].blank? || (ENV["SCOPE"] == migration.scope)
     end
@@ -16,7 +16,7 @@ namespace :db do
         puts "Migrating db: #{entity.domain}"
 
         ActiveRecord::Migration.verbose = ENV["VERBOSE"] ? ENV["VERBOSE"] == "true" : true
-        context = ActiveRecord::MigrationContext.new(paths, ActiveRecord::SchemaMigration)
+        context = ActiveRecord::MigrationContext.new(paths)
         context.migrate(ENV["VERSION"] ? ENV["VERSION"].to_i : nil) do |migration|
           ENV["SCOPE"].blank? || (ENV["SCOPE"] == migration.scope)
         end
@@ -30,14 +30,14 @@ namespace :db do
       version = ENV['VERSION'] ? ENV['VERSION'].to_i : nil
       paths = Educacao::Application.config.paths['db/migrate'].expanded
 
-      context = ActiveRecord::MigrationContext.new(paths, ActiveRecord::SchemaMigration)
+      context = ActiveRecord::MigrationContext.new(paths)
       context.run(:down, version)
 
       Entity.find_each(batch_size: 100) do |entity|
         entity.using_connection do
           puts "Migrating db: #{entity.domain}"
 
-          context = ActiveRecord::MigrationContext.new(paths, ActiveRecord::SchemaMigration)
+          context = ActiveRecord::MigrationContext.new(paths)
           context.run(:down, version)
         end
       end
@@ -51,7 +51,7 @@ namespace :db do
 
           puts "Migrating db: #{Entity.current.domain}"
 
-          context = ActiveRecord::MigrationContext.new(paths, ActiveRecord::SchemaMigration)
+          context = ActiveRecord::MigrationContext.new(paths)
           context.migrate
         end
       rescue Exception => e
