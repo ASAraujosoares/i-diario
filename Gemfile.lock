@@ -1,4 +1,14 @@
 GIT
+  remote: https://github.com/ASAraujosoares/prawn.git
+  revision: 1a70fb245804b767c388b7a10a187d0ec767c4d4
+  branch: master
+  specs:
+    prawn (2.1.2)
+      matrix
+      pdf-core (~> 0.6.1)
+      ttfunk (~> 1.4.0)
+
+GIT
   remote: https://github.com/matiasleidemer/decore
   revision: ff017a022a623302d7ea823fc4af2b6bec461c7b
   specs:
@@ -19,15 +29,6 @@ GIT
   specs:
     audited (4.10.0)
       activerecord (>= 4.2, < 6.2)
-
-GIT
-  remote: https://github.com/portabilis/prawn.git
-  revision: 9b26bf8875c1e6b7bc1df82a901ba0942762d25f
-  branch: master
-  specs:
-    prawn (2.1.2)
-      pdf-core (~> 0.6.1)
-      ttfunk (~> 1.4.0)
 
 GIT
   remote: https://github.com/samuelsimoes/backbone-nested-attributes.git
