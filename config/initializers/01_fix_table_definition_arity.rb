@@ -3,15 +3,15 @@
 
 ActiveSupport.on_load(:active_record) do
   module TableDefinitionArityFix
-    def initialize(name, temporary = false, options = nil, as = nil, comment: nil, *args, **kwargs)
-      # If a 5th positional argument exists (in *args), we assume it's the comment.
-      # We assign it to the 'comment' keyword if not already set.
+    # CORRECTED SIGNATURE: *args must appear BEFORE comment: nil
+    def initialize(name, temporary = false, options = nil, as = nil, *args, comment: nil, **kwargs)
+
+      # Logic: If a 5th positional argument exists (captured in *args), treat it as the comment.
       if args.any? && comment.nil?
         comment = args.first
       end
 
-      # Call original initialize with strictly the arguments it expects (4 positional + keywords)
-      # We drop any remaining *args to prevent the error.
+      # Call Rails 5.2 original initialize with named arguments
       super(name, temporary, options, as, comment: comment)
     end
   end
