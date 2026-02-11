@@ -1,11 +1,11 @@
 # config/initializers/06_fix_create_table_arity.rb
 
-# Fix for ArgumentError: wrong number of arguments (given 2, expected 1) in create_table
-# Intercepts legacy calls passing options as a 2nd positional argument.
+# Fix for ArgumentError: wrong number of arguments (given 3, expected 1..2) in create_table
+# We patch SchemaStatements directly as it is the final destination for create_table calls.
 
-# Ensure AbstractAdapter is loaded
+# Force load SchemaStatements
 begin
-  require 'active_record/connection_adapters/abstract_adapter'
+  require 'active_record/connection_adapters/abstract/schema_statements'
 rescue LoadError
 end
 
@@ -23,11 +23,14 @@ module CreateTableArityFix
   end
 end
 
-# Apply immediately
-if defined?(ActiveRecord::ConnectionAdapters::AbstractAdapter)
-  ActiveRecord::ConnectionAdapters::AbstractAdapter.prepend(CreateTableArityFix)
-else
-  ActiveSupport.on_load(:active_record) do
-    ActiveRecord::ConnectionAdapters::AbstractAdapter.prepend(CreateTableArityFix)
+# Apply immediately to SchemaStatements
+if defined?(ActiveRecord::ConnectionAdapters::SchemaStatements)
+  ActiveRecord::ConnectionAdapters::SchemaStatements.prepend(CreateTableArityFix)
+end
+
+# Also apply to Compatibility layer just in case
+ActiveSupport.on_load(:active_record) do
+  if defined?(ActiveRecord::Migration::Compatibility::V4_2)
+    ActiveRecord::Migration::Compatibility::V4_2.prepend(CreateTableArityFix)
   end
 end
