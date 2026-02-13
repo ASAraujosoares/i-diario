@@ -1,4 +1,4 @@
-class MigrateLegacyAbsenceJustifications < ActiveRecord::Migration
+class MigrateLegacyAbsenceJustifications < ActiveRecord::Migration[5.2]
   def change
     execute <<-SQL
       UPDATE absence_justifications
