@@ -1,4 +1,4 @@
-class PopulateSchoolCalendarDisciplineGrades < ActiveRecord::Migration[4.2]
+class PopulateSchoolCalendarDisciplineGrades < ActiveRecord::Migration[5.2]
   def change
     execute <<-SQL
       DO $$

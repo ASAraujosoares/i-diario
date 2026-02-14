@@ -1,4 +1,4 @@
-class AddClassNumberToDisciplineContentRecord < ActiveRecord::Migration
+class AddClassNumberToDisciplineContentRecord < ActiveRecord::Migration[5.2]
   def up
     add_column :discipline_content_records, :class_number, :integer, default: 0
   end

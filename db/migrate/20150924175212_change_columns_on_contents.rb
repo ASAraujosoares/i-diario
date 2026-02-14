@@ -1,4 +1,4 @@
-class ChangeColumnsOnContents < ActiveRecord::Migration[4.2]
+class ChangeColumnsOnContents < ActiveRecord::Migration[5.2]
   def change
     change_column :contents, :description, :text, null: true
 

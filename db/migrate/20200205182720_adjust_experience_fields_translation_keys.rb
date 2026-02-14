@@ -1,4 +1,4 @@
-class AdjustExperienceFieldsTranslationKeys < ActiveRecord::Migration[4.2]
+class AdjustExperienceFieldsTranslationKeys < ActiveRecord::Migration[5.2]
   def up
     execute <<-SQL
       UPDATE translations

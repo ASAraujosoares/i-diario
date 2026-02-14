@@ -1,4 +1,4 @@
-class AddDiscardedAtToDailyFrequencyStudentIndex < ActiveRecord::Migration[4.2]
+class AddDiscardedAtToDailyFrequencyStudentIndex < ActiveRecord::Migration[5.2]
   def change
     if index_exists?(
       :daily_frequency_students,

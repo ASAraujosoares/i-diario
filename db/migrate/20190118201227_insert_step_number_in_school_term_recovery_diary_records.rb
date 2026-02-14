@@ -1,4 +1,4 @@
-class InsertStepNumberInSchoolTermRecoveryDiaryRecords < ActiveRecord::Migration[4.2]
+class InsertStepNumberInSchoolTermRecoveryDiaryRecords < ActiveRecord::Migration[5.2]
   def change
     execute <<-SQL
       UPDATE school_term_recovery_diary_records

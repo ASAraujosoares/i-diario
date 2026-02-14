@@ -1,4 +1,4 @@
-class DropTableSessions < ActiveRecord::Migration[4.2]
+class DropTableSessions < ActiveRecord::Migration[5.2]
   def up
     drop_table :sessions
   end

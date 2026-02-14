@@ -1,4 +1,4 @@
-class AddOpinionTypeToDescriptiveExams < ActiveRecord::Migration[4.2]
+class AddOpinionTypeToDescriptiveExams < ActiveRecord::Migration[5.2]
   def change
     add_column(:descriptive_exams, :opinion_type, :string)
     execute <<-SQL

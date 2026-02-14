@@ -1,4 +1,4 @@
-class RemoveColumnCompletedWorkersFromWorkerBatch < ActiveRecord::Migration[4.2]
+class RemoveColumnCompletedWorkersFromWorkerBatch < ActiveRecord::Migration[5.2]
   def up
     remove_column :worker_batches, :completed_workers
   end

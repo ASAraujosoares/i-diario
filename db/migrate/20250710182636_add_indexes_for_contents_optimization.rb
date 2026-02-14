@@ -1,4 +1,4 @@
-class AddIndexesForContentsOptimization < ActiveRecord::Migration
+class AddIndexesForContentsOptimization < ActiveRecord::Migration[5.2]
   disable_ddl_transaction!
   
   def change

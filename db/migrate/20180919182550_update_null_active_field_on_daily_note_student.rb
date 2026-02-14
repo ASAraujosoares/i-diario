@@ -1,4 +1,4 @@
-class UpdateNullActiveFieldOnDailyNoteStudent < ActiveRecord::Migration[4.2]
+class UpdateNullActiveFieldOnDailyNoteStudent < ActiveRecord::Migration[5.2]
   def change
     execute <<-SQL
       UPDATE daily_note_students

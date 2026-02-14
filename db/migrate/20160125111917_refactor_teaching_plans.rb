@@ -1,4 +1,4 @@
-class RefactorTeachingPlans < ActiveRecord::Migration[4.2]
+class RefactorTeachingPlans < ActiveRecord::Migration[5.2]
   def change
     rename_table :teaching_plans, :teaching_plans_old
 

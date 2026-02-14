@@ -1,4 +1,4 @@
-class AddUniqueIndexToStudentEnrollmentClassrooms < ActiveRecord::Migration[4.2]
+class AddUniqueIndexToStudentEnrollmentClassrooms < ActiveRecord::Migration[5.2]
   def change
     add_index :student_enrollment_classrooms,
               [:student_enrollment_id, :classroom_id, :joined_at, :period],

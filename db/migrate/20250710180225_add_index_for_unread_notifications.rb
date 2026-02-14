@@ -1,4 +1,4 @@
-class AddIndexForUnreadNotifications < ActiveRecord::Migration
+class AddIndexForUnreadNotifications < ActiveRecord::Migration[5.2]
   disable_ddl_transaction!
   
   def change

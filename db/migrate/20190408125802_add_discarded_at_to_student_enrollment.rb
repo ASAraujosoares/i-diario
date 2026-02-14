@@ -1,4 +1,4 @@
-class AddDiscardedAtToStudentEnrollment < ActiveRecord::Migration[4.2]
+class AddDiscardedAtToStudentEnrollment < ActiveRecord::Migration[5.2]
   def up
     add_column :student_enrollments, :discarded_at, :datetime
     add_index :student_enrollments, :discarded_at

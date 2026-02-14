@@ -1,4 +1,4 @@
-class FixRoundingTableIdForeignKeyOnExamRules < ActiveRecord::Migration[4.2]
+class FixRoundingTableIdForeignKeyOnExamRules < ActiveRecord::Migration[5.2]
   def change
     # 1. Safe remove
     begin

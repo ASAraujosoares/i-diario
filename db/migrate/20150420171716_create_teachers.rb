@@ -1,4 +1,4 @@
-class CreateTeachers < ActiveRecord::Migration[4.2]
+class CreateTeachers < ActiveRecord::Migration[5.2]
   def change
     create_table :teachers do |t|
       t.string :api_code, index: true, null: false

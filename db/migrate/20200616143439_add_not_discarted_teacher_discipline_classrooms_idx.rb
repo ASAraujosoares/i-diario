@@ -1,4 +1,4 @@
-class AddNotDiscartedTeacherDisciplineClassroomsIdx < ActiveRecord::Migration[4.2]
+class AddNotDiscartedTeacherDisciplineClassroomsIdx < ActiveRecord::Migration[5.2]
   disable_ddl_transaction!
 
   def change

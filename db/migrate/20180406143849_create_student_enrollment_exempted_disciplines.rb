@@ -1,4 +1,4 @@
-class CreateStudentEnrollmentExemptedDisciplines < ActiveRecord::Migration[4.2]
+class CreateStudentEnrollmentExemptedDisciplines < ActiveRecord::Migration[5.2]
   def change
     create_table :student_enrollment_exempted_disciplines do |t|
       t.references :student_enrollment

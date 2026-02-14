@@ -1,4 +1,4 @@
-class PopulateDailyFrequenciesPeriodFiled < ActiveRecord::Migration[4.2]
+class PopulateDailyFrequenciesPeriodFiled < ActiveRecord::Migration[5.2]
   def change
     Unity.includes(:classrooms).each do |unity|
       unity.classrooms.each do |classroom|

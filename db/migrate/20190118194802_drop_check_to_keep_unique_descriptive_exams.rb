@@ -1,4 +1,4 @@
-class DropCheckToKeepUniqueDescriptiveExams < ActiveRecord::Migration[4.2]
+class DropCheckToKeepUniqueDescriptiveExams < ActiveRecord::Migration[5.2]
   def change
     execute <<-SQL
       ALTER TABLE descriptive_exams

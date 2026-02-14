@@ -1,4 +1,4 @@
-class RemoveColumnKindFromRole < ActiveRecord::Migration[4.2]
+class RemoveColumnKindFromRole < ActiveRecord::Migration[5.2]
   def change
     remove_column :roles, :kind, :string
   end

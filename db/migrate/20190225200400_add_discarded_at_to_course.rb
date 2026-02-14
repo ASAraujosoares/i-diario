@@ -1,4 +1,4 @@
-class AddDiscardedAtToCourse < ActiveRecord::Migration[4.2]
+class AddDiscardedAtToCourse < ActiveRecord::Migration[5.2]
   def up
     add_column :courses, :discarded_at, :datetime
     add_index :courses, :discarded_at
