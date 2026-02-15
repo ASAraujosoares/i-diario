@@ -18,28 +18,37 @@ module AddIndexOptionsArityFix
       kwargs = kwargs.merge(options.symbolize_keys)
     end
 
-    # 2. LENGTH FIX: Check and auto-shorten index name if needed
-    # Calculate what the name WOULD be
-    index_name, index_type, index_columns, index_options, index_algorithm, index_using, comment = super(table_name, column_name, **kwargs)
+    # 2. LENGTH FIX (Pre-emptive): Check length BEFORE calling super to avoid validation crash
+    # Construct the name that Rails would likely generate if not provided
+    if kwargs[:name]
+      candidate_name = kwargs[:name].to_s
+    else
+      # Rails default: index_table_on_col1_and_col2...
+      # Note: This is an approximation of what Rails does, but sufficient for length checking.
+      # If Rails generates a different name, it will likely be similar in length.
+      # The safest bet for VERY long inferred names is to force a name anyway if we suspect overflow.
 
-    # If the generated name (or provided name) is too long for Postgres (63 chars)
-    if index_name.to_s.length > 63
-      # Create a deterministic short name using a hash of the original long name
-      # "idx_" (4) + 10 chars of table name + "_" (1) + 10 chars of hash = 25 chars (safe)
-      # We use a shorter hash to keep it readable but unique enough for migration contexts
-      short_hash = Digest::SHA1.hexdigest(index_name.to_s)[0, 10]
-      short_prefix = table_name.to_s[0, 15] # 15 chars of table name
-      new_safe_name = "idx_#{short_prefix}_#{short_hash}"
+      # However, we only care if the *provided* name or the *very likely* name is too long.
+      # Calculating the exact Rails default name here is complex (handling scope/lengths).
+      # BUT, if we generate a name based on table+columns and it's long, we should override it.
 
-      # Override the name in the original options
-      kwargs[:name] = new_safe_name
-
-      # Re-run super with the new safe name to get the correct return values
-      return super(table_name, column_name, **kwargs)
+      cols = Array(column_name).map(&:to_s).join('_and_')
+      candidate_name = "index_#{table_name}_on_#{cols}"
     end
 
-    # Return original result if length was fine
-    return index_name, index_type, index_columns, index_options, index_algorithm, index_using, comment
+    # If it exceeds Postgres limit (63 chars), force a short deterministic hash name
+    if candidate_name.length > 63
+      short_hash = Digest::SHA1.hexdigest(candidate_name)[0, 40]
+      # Pattern: idx_ + first 10 chars of table + _ + 40 chars hash = 55 chars (Safe)
+      short_prefix = table_name.to_s[0, 10]
+      new_safe_name = "idx_#{short_prefix}_#{short_hash}"
+
+      # Inject the safe name into options so Rails accepts it without complaining
+      kwargs[:name] = new_safe_name
+    end
+
+    # Call original method with the now-safe arguments
+    super(table_name, column_name, *args, **kwargs)
   end
 end
 
