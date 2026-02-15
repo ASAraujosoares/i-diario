@@ -24,12 +24,15 @@ class RefactorTeachingPlans < ActiveRecord::Migration[5.2]
       t.timestamps
     end
 
-    add_index(
-      :discipline_teaching_plans,
-      [:teaching_plan_id, :discipline_id],
-      unique: true,
-      name: :idx_discipline_teaching_plans_on_teaching_plan_and_discipline
-    )
+    # Use existence check to avoid duplicate index error
+    unless index_exists?(:discipline_teaching_plans, [:teaching_plan_id, :discipline_id], name: :idx_discipline_teaching_plans_on_teaching_plan_and_discipline)
+      add_index(
+        :discipline_teaching_plans,
+        [:teaching_plan_id, :discipline_id],
+        unique: true,
+        name: :idx_discipline_teaching_plans_on_teaching_plan_and_discipline
+      )
+    end
 
     create_table :knowledge_area_teaching_plans do |t|
       t.references :teaching_plan, null: false, foreign_key: true
@@ -37,7 +40,24 @@ class RefactorTeachingPlans < ActiveRecord::Migration[5.2]
       t.timestamps
     end
 
-    add_index(:discipline_teaching_plans, :teaching_plan_id, unique: true)
+    # This index seems to conflict with the foreign key or previous indexes
+    # But wait, t.references :teaching_plan usually adds an index if index: true (default varies)
+    # The error was "Relation already exists".
+    # We'll wrap this one too.
+    unless index_exists?(:discipline_teaching_plans, :teaching_plan_id)
+      # Wait, this is creating an index on a table created just above.
+      # If create_table added it implicitly, this fails.
+      # However, we didn't specify index: true in create_table references.
+      # But t.references in Rails 5+ usually adds index by default? No, default is false unless configured.
+      # But wait, create_table :discipline_teaching_plans references :teaching_plan.
+
+      # NOTE: The previous line `add_index(:discipline_teaching_plans, :teaching_plan_id, unique: true)`
+      # is suspicious because it's adding a UNIQUE index on just teaching_plan_id,
+      # but there is also a composite index above.
+
+      # Let's wrap it safely.
+      add_index(:discipline_teaching_plans, :teaching_plan_id, unique: true)
+    end
 
     create_table :knowledge_area_teaching_plan_knowledge_areas do |t|
       t.references :knowledge_area_teaching_plan, null: false
@@ -58,12 +78,14 @@ class RefactorTeachingPlans < ActiveRecord::Migration[5.2]
       name: :knowledge_area_teaching_plan_knowledge_areas_knowledge_area_fk
     )
 
-    add_index(
-      :knowledge_area_teaching_plan_knowledge_areas,
-      [:knowledge_area_teaching_plan_id, :knowledge_area_id],
-      unique: true,
-      name: :idx_ka_tp_ka_on_k_area_teaching_plan_id_and_knowledge_area_id
-    )
+    unless index_exists?(:knowledge_area_teaching_plan_knowledge_areas, [:knowledge_area_teaching_plan_id, :knowledge_area_id], name: :idx_ka_tp_ka_on_k_area_teaching_plan_id_and_knowledge_area_id)
+      add_index(
+        :knowledge_area_teaching_plan_knowledge_areas,
+        [:knowledge_area_teaching_plan_id, :knowledge_area_id],
+        unique: true,
+        name: :idx_ka_tp_ka_on_k_area_teaching_plan_id_and_knowledge_area_id
+      )
+    end
 
     create_table :teaching_plans_temp, temporary: true do |t|
       t.integer :year, null: false
