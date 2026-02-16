@@ -5,18 +5,22 @@ class CreateAvaliationRecoveryDiaryRecord < ActiveRecord::Migration[5.2]
       t.references :avaliation, foreign_key: true
     end
 
-    add_index(
-      :avaliation_recovery_diary_records,
-      :recovery_diary_record_id,
-      unique: true,
-      name: :index_avaliation_recovery_diary_records_on_recovery_diary_id
-    )
+    unless index_exists?(:avaliation_recovery_diary_records, :recovery_diary_record_id, name: :index_avaliation_recovery_diary_records_on_recovery_diary_id)
+      add_index(
+        :avaliation_recovery_diary_records,
+        :recovery_diary_record_id,
+        unique: true,
+        name: :index_avaliation_recovery_diary_records_on_recovery_diary_id
+      )
+    end
 
-    add_index(
-      :avaliation_recovery_diary_records,
-      :avaliation_id,
-      unique: true
-    )
+    unless index_exists?(:avaliation_recovery_diary_records, :avaliation_id)
+      add_index(
+        :avaliation_recovery_diary_records,
+        :avaliation_id,
+        unique: true
+      )
+    end
 
   end
 end
