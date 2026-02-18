@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
 
   include BootstrapFlashHelper
   include Pundit
-  skip_around_action :set_locale_from_url
+  skip_around_action :set_locale_from_url, raise: false
   around_action :handle_customer
   before_action :set_honeybadger_context
   around_action :set_user_current
