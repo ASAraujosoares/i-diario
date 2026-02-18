@@ -1,9 +1,5 @@
-ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../Gemfile', __dir__)
-
-require 'bundler/setup' # Set up gems listed in the Gemfile.
-
-# FIX: Force YAML to be permissive (Psych 4/Ruby 3.2 compatibility for Rails 5.2)
-# We patch this here in boot.rb to ensure it applies BEFORE Rails attempts to load database.yml
+# FIX: Force YAML to be permissive (Psych 4 compatibility for Rails 5.2)
+# This MUST be the first thing to run to catch database.yml loading.
 require 'yaml'
 module YAML
   class << self
@@ -11,4 +7,7 @@ module YAML
   end
 end
 
+ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../Gemfile', __dir__)
+
+require 'bundler/setup' # Set up gems listed in the Gemfile.
 require 'bootsnap/setup' # Speed up boot time by caching expensive operations.
