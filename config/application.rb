@@ -19,17 +19,12 @@ module ActiveRecord
   end
 end
 
-# Patch YAML to allow aliases (Psych 4 compatibility)
+# FIX: Force YAML to be permissive (Psych 4/Ruby 3.2 compatibility for Rails 5.2)
+# This must run before any YAML loading happens in the app boot.
 require 'yaml'
 module YAML
   class << self
-    def load(yaml, *args, **kwargs)
-      if respond_to?(:unsafe_load)
-        unsafe_load(yaml, *args, **kwargs)
-      else
-        super
-      end
-    end
+    alias_method :load, :unsafe_load if respond_to?(:unsafe_load)
   end
 end
 
