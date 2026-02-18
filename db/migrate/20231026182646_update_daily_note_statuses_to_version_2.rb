@@ -1,8 +1,7 @@
 class UpdateDailyNoteStatusesToVersion2 < ActiveRecord::Migration[5.2]
   def change
-    # Ruby 3 syntax fix: ensure the hash is passed explicitly
-    # If replace_view expects 1 argument, it likely means 'view_name' and keywords.
-    # We pass the name as the first arg, and the rest as keyword arguments.
+    # FIX: Use Ruby 3 keyword arguments (no curly braces)
+    # This matches the signature: replace_view(name, version: nil, revert_to_version: nil, ...)
     replace_view :daily_note_statuses, version: 2, revert_to_version: 1
   end
 end
