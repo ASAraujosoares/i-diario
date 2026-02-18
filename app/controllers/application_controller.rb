@@ -233,7 +233,8 @@ class ApplicationController < ActionController::Base
     redirect_to root_path
   end
 
-  def valid_current_role?
+  # FIX: Accept *args to handle callers passing extra arguments (like set_honeybadger_context)
+  def valid_current_role?(current_role = nil, *_args)
     # Ensure keyword arguments are correctly passed in Ruby 3
     CurrentRoleForm.new(
       current_user: current_user,
