@@ -1,4 +1,4 @@
-class PopulateLabelColorsToClassrooms < ActiveRecord::Migration[4.2]
+class PopulateLabelColorsToClassrooms < ActiveRecord::Migration[5.2]
   def change
     ActiveRecord::Base.connection.execute(
       <<-SQL

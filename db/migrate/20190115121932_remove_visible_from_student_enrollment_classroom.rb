@@ -1,4 +1,4 @@
-class RemoveVisibleFromStudentEnrollmentClassroom < ActiveRecord::Migration[4.2]
+class RemoveVisibleFromStudentEnrollmentClassroom < ActiveRecord::Migration[5.2]
   def change
     remove_column :student_enrollment_classrooms, :visible, :boolean
   end

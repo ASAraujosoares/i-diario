@@ -1,4 +1,4 @@
-class UpdateStatusForActiveUsers < ActiveRecord::Migration[4.2]
+class UpdateStatusForActiveUsers < ActiveRecord::Migration[5.2]
   def up
     execute <<-SQL
       UPDATE users SET status = 'active' WHERE status = 'actived'

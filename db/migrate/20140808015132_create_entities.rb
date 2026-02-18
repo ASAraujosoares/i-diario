@@ -1,4 +1,4 @@
-class CreateEntities < ActiveRecord::Migration[4.2]
+class CreateEntities < ActiveRecord::Migration[5.2]
   def change
     enable_extension :hstore
 

@@ -1,4 +1,4 @@
-class RemoveActiveFromSchoolCalendarSteps < ActiveRecord::Migration[4.2]
+class RemoveActiveFromSchoolCalendarSteps < ActiveRecord::Migration[5.2]
   def change
     remove_column :school_calendar_steps, :active, :boolean
   end

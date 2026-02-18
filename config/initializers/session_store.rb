@@ -11,9 +11,12 @@ unless Rails.env.test? || Rails.env.development?
     }
   else
 
+    url = "#{Rails.application.secrets[:REDIS_URL]}#{Rails.application.secrets[:REDIS_DB_SESSION]}"
+    url = "redis://localhost:6379/1" if url.blank? || url == "1"
+
     redis_config = {
       servers: [{
-        url: "#{Rails.application.secrets[:REDIS_URL]}#{Rails.application.secrets[:REDIS_DB_SESSION]}"
+        url: url
       }],
       expire_after: 12.hours,
       key: "_#{Rails.application.class.parent_name.downcase}_session",
@@ -22,5 +25,5 @@ unless Rails.env.test? || Rails.env.development?
     }
   end
 
-  Rails.application.config.session_store :redis_store, redis_config
+  Rails.application.config.session_store :redis_store, **redis_config
 end

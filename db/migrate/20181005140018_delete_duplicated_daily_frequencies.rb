@@ -1,4 +1,4 @@
-class DeleteDuplicatedDailyFrequencies < ActiveRecord::Migration[4.2]
+class DeleteDuplicatedDailyFrequencies < ActiveRecord::Migration[5.2]
   def change
     execute <<-SQL
       DO $$DECLARE

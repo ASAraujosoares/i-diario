@@ -1,4 +1,4 @@
-class RemoveExamRuleIdFromClassrooms < ActiveRecord::Migration[4.2]
+class RemoveExamRuleIdFromClassrooms < ActiveRecord::Migration[5.2]
   def change
     remove_column :classrooms, :exam_rule_id
   end

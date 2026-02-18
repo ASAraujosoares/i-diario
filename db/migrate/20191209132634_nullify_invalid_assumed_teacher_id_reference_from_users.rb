@@ -1,4 +1,4 @@
-class NullifyInvalidAssumedTeacherIdReferenceFromUsers < ActiveRecord::Migration[4.2]
+class NullifyInvalidAssumedTeacherIdReferenceFromUsers < ActiveRecord::Migration[5.2]
   class MigrationUser < ActiveRecord::Base
     self.table_name = :users
   end

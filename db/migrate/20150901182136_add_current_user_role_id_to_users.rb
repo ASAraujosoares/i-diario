@@ -1,4 +1,4 @@
-class AddCurrentUserRoleIdToUsers < ActiveRecord::Migration[4.2]
+class AddCurrentUserRoleIdToUsers < ActiveRecord::Migration[5.2]
   def change
     add_column :users, :current_user_role_id, :integer, null: true
 

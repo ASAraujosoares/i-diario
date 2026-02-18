@@ -1,4 +1,4 @@
-class DeleteOrphanLessonPlans < ActiveRecord::Migration[4.2]
+class DeleteOrphanLessonPlans < ActiveRecord::Migration[5.2]
   def change
     execute <<-SQL
       DO $$DECLARE r record;

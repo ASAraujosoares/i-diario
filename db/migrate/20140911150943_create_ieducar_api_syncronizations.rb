@@ -1,4 +1,4 @@
-class CreateIeducarApiSyncronizations < ActiveRecord::Migration[4.2]
+class CreateIeducarApiSyncronizations < ActiveRecord::Migration[5.2]
   def change
     create_table :ieducar_api_syncronizations do |t|
       t.integer :ieducar_api_configuration_id

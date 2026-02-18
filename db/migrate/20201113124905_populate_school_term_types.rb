@@ -1,8 +1,8 @@
-class PopulateSchoolTermTypes < ActiveRecord::Migration[4.2]
+class PopulateSchoolTermTypes < ActiveRecord::Migration[5.2]
   def change
     (
-      SchoolCalendar.uniq.pluck(:step_type_description) +
-      SchoolCalendarClassroom.uniq.pluck(:step_type_description)
+      SchoolCalendar.distinct.pluck(:step_type_description) +
+      SchoolCalendarClassroom.distinct.pluck(:step_type_description)
     ).uniq.each do |step_type_description|
       step = SchoolCalendarStep.joins(:school_calendar)
                                .where(

@@ -1,4 +1,4 @@
-class AdjustWrongSchoolCalendarInDailyFrequencies < ActiveRecord::Migration[4.2]
+class AdjustWrongSchoolCalendarInDailyFrequencies < ActiveRecord::Migration[5.2]
   def change
     execute <<-SQL
       DO $$DECLARE

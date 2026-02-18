@@ -1,4 +1,4 @@
-class UpdateDescriptorFieldOnDisciplines < ActiveRecord::Migration[4.2]
+class UpdateDescriptorFieldOnDisciplines < ActiveRecord::Migration[5.2]
   def change
     execute <<-SQL
       UPDATE disciplines d

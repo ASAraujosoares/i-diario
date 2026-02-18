@@ -1,4 +1,4 @@
-class AddGroupedDisciplinesView < ActiveRecord::Migration[4.2]
+class AddGroupedDisciplinesView < ActiveRecord::Migration[5.2]
   def change
     execute(<<-SQL)
       CREATE OR REPLACE VIEW grouped_disciplines AS

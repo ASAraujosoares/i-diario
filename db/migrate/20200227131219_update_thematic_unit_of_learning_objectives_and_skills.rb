@@ -1,4 +1,4 @@
-class UpdateThematicUnitOfLearningObjectivesAndSkills < ActiveRecord::Migration[4.2]
+class UpdateThematicUnitOfLearningObjectivesAndSkills < ActiveRecord::Migration[5.2]
   def up
     execute <<-SQL
       UPDATE learning_objectives_and_skills SET thematic_unit = 'Matéria e energia' WHERE code = 'EF07CI01';
