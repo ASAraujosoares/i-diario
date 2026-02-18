@@ -1,5 +1,9 @@
-# FIX: Force YAML to be permissive (Psych 4 compatibility for Rails 5.2)
-# Must be first!
+ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../Gemfile', __dir__)
+
+require 'bundler/setup' # Set up gems listed in the Gemfile.
+
+# FIX: Force YAML to be permissive (Psych 4/Ruby 3.2 compatibility for Rails 5.2)
+# This enables aliases (<<: *default) and legacy classes.
 require 'yaml'
 module YAML
   class << self
@@ -7,9 +11,5 @@ module YAML
   end
 end
 
-ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../Gemfile', __dir__)
-
-require 'bundler/setup' # Set up gems listed in the Gemfile.
-
-# Disable bootsnap to prevent caching issues with YAML loading
+# Bootsnap is disabled to prevent caching issues during this fix.
 # require 'bootsnap/setup'
