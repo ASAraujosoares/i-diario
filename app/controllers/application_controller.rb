@@ -234,6 +234,7 @@ class ApplicationController < ActionController::Base
   end
 
   def valid_current_role?
+    # Ensure keyword arguments are correctly passed in Ruby 3
     CurrentRoleForm.new(
       current_user: current_user,
       current_user_role: current_user.current_user_role,
